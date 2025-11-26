@@ -29,6 +29,7 @@ urlpatterns = [
     path('success/', success_page, name='success'),
     path('admin/', admin.site.urls),
     path('receipes/', receipes, name='receipes'),
+    path('delete-recipe/<int:recipe_id>/', delete_recipe, name='delete_recipe'),
 ]
 
 # Serve media files in development

@@ -32,3 +32,14 @@ def receipes(request):
         'receipes':queryset
     }
     return render(request, 'receipes.html', context)
+
+
+def delete_recipe(request, recipe_id):
+    try:
+        recipe = Receipe.objects.get(id=recipe_id)
+        recipe.delete()
+        print(f"Recipe '{recipe.receipe_name}' deleted successfully!")
+    except Receipe.DoesNotExist:
+        print(f"Recipe with id {recipe_id} not found")
+    
+    return redirect('receipes')
