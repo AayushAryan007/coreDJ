@@ -1,0 +1,159 @@
+{% extends "base.html" %} {% block start %}
+<div>
+  <h1 style="text-align: center; color: #333; margin-top: 30px">Edit Recipe</h1>
+
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    style="
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    "
+  >
+    {% csrf_token %}
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_name"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Name</label
+      >
+      <input
+        type="text"
+        id="receipe_name"
+        name="receipe_name"
+        value="{{ receipe.receipe_name }}"
+        placeholder="Enter recipe name"
+        required
+        style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+        "
+      />
+    </div>
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_description"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Description</label
+      >
+      <textarea
+        id="receipe_description"
+        name="receipe_description"
+        placeholder="Enter recipe description"
+        rows="5"
+        required
+        style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+          font-family: Arial, sans-serif;
+        "
+      >
+{{ receipe.receipe_description }}</textarea
+      >
+    </div>
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_image"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Image</label
+      >
+      {% if receipe.receipe_image %}
+      <div style="margin-bottom: 10px">
+        <img
+          src="{{ receipe.receipe_image.url }}"
+          alt="{{ receipe.receipe_name }}"
+          style="max-width: 200px; max-height: 200px; border-radius: 4px"
+        />
+        <p style="color: #666; font-size: 12px; margin-top: 5px">
+          Current image. Upload a new image to replace it.
+        </p>
+      </div>
+      {% endif %}
+      <input
+        type="file"
+        id="receipe_image"
+        name="receipe_image"
+        accept="image/*"
+        style="
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      />
+    </div>
+
+    <div style="display: flex; gap: 10px">
+      <button
+        type="submit"
+        style="
+          flex: 1;
+          padding: 12px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#218838'"
+        onmouseout="this.style.backgroundColor='#28a745'"
+      >
+        Update Recipe
+      </button>
+      <a
+        href="/receipes/"
+        style="
+          flex: 1;
+          padding: 12px;
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: bold;
+          cursor: pointer;
+          text-decoration: none;
+          text-align: center;
+          transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#5a6268'"
+        onmouseout="this.style.backgroundColor='#6c757d'"
+      >
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+
+{%endblock %}

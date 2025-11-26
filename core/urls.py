@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from home.views import *
 from vege.views import *
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', home, name='home'),
@@ -29,7 +30,12 @@ urlpatterns = [
     path('success/', success_page, name='success'),
     path('admin/', admin.site.urls),
     path('receipes/', receipes, name='receipes'),
+    path('edit-recipe/<int:recipe_id>/', edit_recipe, name='edit_recipe'),
     path('delete-recipe/<int:recipe_id>/', delete_recipe, name='delete_recipe'),
+
+    path('login/', login_page, name='login'),
+    path('register/', register_page, name='register'),
+    path('logout/', LogoutView.as_view(next_page='/login/'), name='logout'),
 ]
 
 # Serve media files in development

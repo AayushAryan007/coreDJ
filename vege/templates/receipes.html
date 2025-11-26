@@ -2,6 +2,29 @@
 <div>
   <!-- {{receipes}} -->
 
+  <div style="text-align: right; margin: 20px">
+    <form method="post" action="{% url 'logout' %}" style="display: inline">
+      {% csrf_token %}
+      <button
+        type="submit"
+        style="
+          background-color: #dc3545;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#c82333'"
+        onmouseout="this.style.backgroundColor='#dc3545'"
+      >
+        Logout
+      </button>
+    </form>
+  </div>
+
   <h1 style="text-align: center; color: #333; margin-top: 30px">Add Recipe</h1>
 
   <form
@@ -120,6 +143,64 @@
     </button>
   </form>
 
+  <div style="max-width: 900px; margin: 30px auto">
+    <form method="GET" style="display: flex; gap: 10px; margin-bottom: 20px">
+      <input
+        type="text"
+        name="search"
+        placeholder="Search recipes by name..."
+        value="{{ search_query }}"
+        style="
+          flex: 1;
+          padding: 12px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+        "
+      />
+      <button
+        type="submit"
+        style="
+          padding: 12px 20px;
+          background-color: #17a2b8;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#138496'"
+        onmouseout="this.style.backgroundColor='#17a2b8'"
+      >
+        Search
+      </button>
+      {% if search_query %}
+      <a
+        href="/receipes/"
+        style="
+          padding: 12px 20px;
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          text-decoration: none;
+          text-align: center;
+          transition: background-color 0.3s ease;
+        "
+        onmouseover="this.style.backgroundColor='#5a6268'"
+        onmouseout="this.style.backgroundColor='#6c757d'"
+      >
+        Clear
+      </a>
+      {% endif %}
+    </form>
+  </div>
+
   <h2 style="text-align: center; color: #333; margin-top: 50px">All Recipes</h2>
   <table
     border="1"
@@ -161,6 +242,24 @@
           {% else %} No Image {% endif %}
         </td>
         <td style="padding: 10px; text-align: center">
+          <a
+            href="/edit-recipe/{{ receipe.id }}/"
+            style="
+              background-color: #28a745;
+              color: white;
+              padding: 8px 15px;
+              border-radius: 4px;
+              text-decoration: none;
+              font-weight: bold;
+              cursor: pointer;
+              transition: background-color 0.3s ease;
+              margin-right: 5px;
+            "
+            onmouseover="this.style.backgroundColor='#218838'"
+            onmouseout="this.style.backgroundColor='#28a745'"
+          >
+            Edit
+          </a>
           <a
             href="/delete-recipe/{{ receipe.id }}/"
             style="
