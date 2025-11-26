@@ -21,6 +21,10 @@ class Student(models.Model):
 # # With __str__:
 # print(student)  # Output: Alice
 
-class Product(models.Model):
+class Car(models.Model):
     name = models.CharField(max_length=100)
+    speed = models.IntegerField(default=50)
+    
+    def __str__(self):
+        return self.name
     
