@@ -1,0 +1,174 @@
+{% extends "base.html" %} {% block start %}
+<div>
+  <!-- {{receipes}} -->
+
+  <h1 style="text-align: center; color: #333; margin-top: 30px">Add Recipe</h1>
+
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    style="
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    "
+  >
+    {% csrf_token %}
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_name"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Name</label
+      >
+      <input
+        type="text"
+        id="receipe_name"
+        name="receipe_name"
+        placeholder="Enter recipe name"
+        required
+        style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+        "
+      />
+    </div>
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_description"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Description</label
+      >
+      <textarea
+        id="receipe_description"
+        name="receipe_description"
+        placeholder="Enter recipe description"
+        rows="5"
+        required
+        style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+          font-family: Arial, sans-serif;
+        "
+      ></textarea>
+    </div>
+
+    <div style="margin-bottom: 20px">
+      <label
+        for="receipe_image"
+        style="
+          display: block;
+          margin-bottom: 8px;
+          font-weight: bold;
+          color: #333;
+        "
+        >Recipe Image</label
+      >
+      <input
+        type="file"
+        id="receipe_image"
+        name="receipe_image"
+        accept="image/*"
+        required
+        style="
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      />
+    </div>
+
+    <button
+      type="submit"
+      style="
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#0056b3'"
+      onmouseout="this.style.backgroundColor='#007bff'"
+    >
+      Add Recipe
+    </button>
+  </form>
+
+  <h2 style="text-align: center; color: #333; margin-top: 50px">All Recipes</h2>
+  <table
+    border="1"
+    cellpadding="10"
+    cellspacing="0"
+    style="
+      width: 100%;
+      max-width: 900px;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    "
+  >
+    <thead>
+      <tr style="background-color: #007bff; color: white">
+        <th style="text-align: left; padding: 12px">#</th>
+        <th style="text-align: left; padding: 12px">Recipe Name</th>
+        <th style="text-align: left; padding: 12px">Description</th>
+        <th style="text-align: left; padding: 12px">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for receipe in receipes %}
+      <tr style="border-bottom: 1px solid #ddd">
+        <td style="padding: 10px">{{ forloop.counter }}</td>
+        <td style="padding: 10px">{{ receipe.receipe_name }}</td>
+        <td style="padding: 10px">
+          {{ receipe.receipe_description|truncatewords:15 }}
+        </td>
+        <td style="padding: 10px; text-align: center">
+          {% if receipe.receipe_image %}
+          <img
+            src="{{ receipe.receipe_image.url }}"
+            alt="{{ receipe.receipe_name }}"
+            style="max-width: 100px; max-height: 100px; border-radius: 4px"
+          />
+          {% else %} No Image {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4" style="text-align: center; padding: 20px; color: #999">
+          No recipes yet. Add one above!
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{%endblock %}
